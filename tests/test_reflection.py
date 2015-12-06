@@ -20,21 +20,27 @@ models_and_ddls = [
         col1 INTEGER NOT NULL,
         col2 INTEGER,
         PRIMARY KEY (col1)
-    ) DISTSTYLE KEY DISTKEY (col1)
+    ) DISTSTYLE KEY DISTKEY ("col1")
     """),
     (models.ReflectionSortKey, """
     CREATE TABLE reflection_sortkey (
         col1 INTEGER NOT NULL,
         col2 INTEGER,
         PRIMARY KEY (col1)
-    ) DISTSTYLE EVEN SORTKEY (col1, col2)
+    ) DISTSTYLE EVEN SORTKEY ("col1", "col2")
     """),
     (models.ReflectionInterleavedSortKey, """
     CREATE TABLE reflection_interleaved_sortkey (
         col1 INTEGER NOT NULL,
         col2 INTEGER,
         PRIMARY KEY (col1)
-    ) DISTSTYLE EVEN INTERLEAVED SORTKEY (col1, col2)
+    ) DISTSTYLE EVEN INTERLEAVED SORTKEY ("col1", "col2")
+    """),
+    (models.ReflectionSortKeyDistKeyWithSpaces, """
+    CREATE TABLE sort_key_with_spaces (
+        "col with spaces" INTEGER NOT NULL,
+        PRIMARY KEY ("col with spaces")
+    ) DISTSTYLE EVEN DISTKEY ("col with spaces") SORTKEY ("col with spaces")
     """),
     (models.ReflectionUniqueConstraint, """
     CREATE TABLE reflection_unique_constraint (
@@ -78,7 +84,7 @@ models_and_ddls = [
     CREATE TABLE other_schema.basic (
         col1 INTEGER NOT NULL,
         PRIMARY KEY (col1)
-    ) DISTSTYLE KEY DISTKEY (col1) SORTKEY (col1)
+    ) DISTSTYLE KEY DISTKEY ("col1") SORTKEY ("col1")
     """),
     pytest.mark.xfail((models.ReflectionDelimitedIdentifiers1, '''
     CREATE TABLE "group" (

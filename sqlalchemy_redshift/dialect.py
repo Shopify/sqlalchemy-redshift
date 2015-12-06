@@ -159,7 +159,7 @@ class RedshiftDDLCompiler(PGDDLCompiler):
         id INTEGER NOT NULL,
         name VARCHAR,
         PRIMARY KEY (id)
-    ) DISTSTYLE KEY DISTKEY (id) INTERLEAVED SORTKEY (id, name)
+    ) DISTSTYLE KEY DISTKEY ("id") INTERLEAVED SORTKEY ("id", "name")
     <BLANKLINE>
     <BLANKLINE>
 
@@ -178,7 +178,7 @@ class RedshiftDDLCompiler(PGDDLCompiler):
         id INTEGER NOT NULL,
         name VARCHAR,
         PRIMARY KEY (id)
-    ) SORTKEY (id)
+    ) SORTKEY ("id")
     <BLANKLINE>
     <BLANKLINE>
 
@@ -237,7 +237,7 @@ class RedshiftDDLCompiler(PGDDLCompiler):
 
         distkey = info.get('distkey')
         if distkey:
-            text += " DISTKEY ({0})".format(distkey)
+            text += " DISTKEY (\"{0}\")".format(distkey)
 
         sortkey = info.get('sortkey')
         interleaved_sortkey = info.get('interleaved_sortkey')
@@ -255,7 +255,8 @@ class RedshiftDDLCompiler(PGDDLCompiler):
                     for key in keys]
             if interleaved_sortkey:
                 text += " INTERLEAVED"
-            text += " SORTKEY ({0})".format(", ".join(keys))
+            text += " SORTKEY ({0})".format(
+                ", ".join('"' + key + '"' for key in keys))
         return text
 
     def get_column_specification(self, column, **kwargs):

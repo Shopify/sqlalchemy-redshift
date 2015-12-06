@@ -108,7 +108,7 @@ class TestDDLCompiler(object):
             u"\n\tid INTEGER NOT NULL, "
             u"\n\tname VARCHAR, "
             u"\n\tPRIMARY KEY (id)\n) "
-            u"DISTKEY (id)\n\n"
+            u"DISTKEY (\"id\")\n\n"
         )
         assert expected == actual, self._compare_strings(expected, actual)
 
@@ -127,7 +127,7 @@ class TestDDLCompiler(object):
             u"\n\tid INTEGER NOT NULL, "
             u"\n\tname VARCHAR, "
             u"\n\tPRIMARY KEY (id)\n) "
-            u"SORTKEY (id)\n\n"
+            u"SORTKEY (\"id\")\n\n"
         )
         assert expected == actual, self._compare_strings(expected, actual)
 
@@ -145,7 +145,7 @@ class TestDDLCompiler(object):
             u"\n\tid INTEGER NOT NULL, "
             u"\n\tname VARCHAR, "
             u"\n\tPRIMARY KEY (id)\n) "
-            u"SORTKEY (id)\n\n"
+            u"SORTKEY (\"id\")\n\n"
         )
         assert expected == actual, self._compare_strings(expected, actual)
 
@@ -164,7 +164,7 @@ class TestDDLCompiler(object):
             u"\n\tid INTEGER NOT NULL, "
             u"\n\tname VARCHAR, "
             u"\n\tPRIMARY KEY (id)\n) "
-            u"SORTKEY (id, name)\n\n"
+            u"SORTKEY (\"id\", \"name\")\n\n"
         )
         assert expected == actual, self._compare_strings(expected, actual)
 
@@ -184,7 +184,7 @@ class TestDDLCompiler(object):
             u"\n\tid INTEGER NOT NULL, "
             u"\n\tname VARCHAR, "
             u"\n\tPRIMARY KEY (id)\n) "
-            u"DISTSTYLE KEY DISTKEY (id) SORTKEY (id, name)\n\n"
+            u"DISTSTYLE KEY DISTKEY (\"id\") SORTKEY (\"id\", \"name\")\n\n"
         )
         assert expected == actual, self._compare_strings(expected, actual)
 
